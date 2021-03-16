@@ -1,13 +1,69 @@
-import React from "react";
 import Image3 from "../assets/svg-3.svg";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { getToken, login } from "../auth";
 
 const LoginModal = ({
   loginClick,
   setLoginClick,
   registerClick,
   setRegisterClick,
+  authenticate,
+  setAuthentication,
+  username,
+  setUsername,
+  token,
+  setToken
+
 }) => {
+
+  const [ password, setPassword ] = useState();
+  const [ loginSuccessful, setLoginSuccessful ] = useState(false);
+
+
+  function authentication(event) {
+    event.preventDefault();
+    
+      fetch(
+        "https://still-plains-94282.herokuapp.com/api/users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              username: username,
+              password: password,
+          })
+        })
+        .then((response) => response.json(), console.log(token, username, password))
+        
+        .then((result) => {
+          console.log(result)
+          login(result.token);
+          setToken(getToken())
+          isLoggedIn(result)
+        })
+        .catch(console.error);
+  
+  }
+
+  const isLoggedIn = (result) => {
+    if (result) {
+      console.log("is logged in");
+      setAuthentication(true);
+      setLoginSuccessful(true);
+      alert(result.message)
+    } else {
+      console.log("not logged in")
+      alert(result.error.message)
+    }
+  }; 
+
+  if (loginSuccessful && authenticate) {
+    return <Redirect to="/myroutines" />;
+  } 
+
   window.addEventListener("click", (e) => {
     if (e.target === document.getElementById("login-modal")) {
       setLoginClick(!loginClick);
@@ -30,7 +86,7 @@ const LoginModal = ({
             <img src={Image3} alt="Working Out" id="modal-img" />
           </div>
           <div className="modal-content-right">
-            <form action="/" method="GET" className="modal-form" id="form">
+            <form action="/" method="GET" className="modal-form" id="form" onSubmit={ authentication }>
               <h1>Let's Get to it!</h1>
               <div className="form-validation">
                 <input
@@ -39,6 +95,9 @@ const LoginModal = ({
                   id="username"
                   name="username"
                   placeholder="Enter your username"
+                  onChange={(event) => {
+                    setUsername(event.target.value);
+                  }}
                 />
                 <p>Error Message</p>
               </div>
@@ -49,16 +108,9 @@ const LoginModal = ({
                   id="password"
                   name="password"
                   placeholder="Enter your password"
-                />
-                <p>Error Message</p>
-              </div>
-              <div className="form-validation">
-                <input
-                  type="password"
-                  className="modal-input"
-                  id="password_confirm"
-                  name="password"
-                  placeholder="Confirm your password"
+                  onChange={(event) => {
+                    setPassword(event.target.value);
+                  }}
                 />
                 <p>Error Message</p>
               </div>
