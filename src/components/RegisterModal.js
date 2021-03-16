@@ -1,14 +1,65 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import Image2 from "../assets/svg-2.svg";
 import "./Modal.css";
+import Image2 from "../assets/svg-2.svg";
+import { useState } from "react";
+import { Redirect, Link } from "react-router-dom";
+import { login, getToken } from '../auth'
+
 
 const RegisterModal = ({
-  loginClick,
-  setLoginClick,
-  registerClick,
-  setRegisterClick,
+      loginClick,
+      setLoginClick,
+      registerClick,
+      setRegisterClick,
+      authenticate, 
+      setAuthentication, 
+      username, 
+      setUsername, 
+      token, 
+      setToken 
 }) => {
+
+  const [ password, setPassWord ] = useState();
+  const [ passwordConfirmation, setPassWordConfirmation ] = useState();
+
+  function createUser(event) {
+    event.preventDefault();
+    if (username && password && password === passwordConfirmation) {
+      fetch(
+        "https://still-plains-94282.herokuapp.com/api/users/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              username: username,
+              password: password,
+          })
+        })
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result)
+          login(result.token);
+          setToken(getToken());
+          isLoggedIn(result)
+        })
+        .catch(console.error);
+    }
+  }
+
+  const isLoggedIn = (result) => {
+    if (result.token) {
+      console.log("is logged in");
+      setAuthentication(true);
+    } else {
+      console.log("not logged in");
+    }
+  };
+
+  if (authenticate && token) {
+    return <Redirect to="./myroutines" />;
+  }
+
   window.addEventListener("click", (e) => {
     if (e.target === document.getElementById("register-modal")) {
       setRegisterClick(!registerClick);
@@ -34,7 +85,7 @@ const RegisterModal = ({
             <img src={Image2} alt="Fitness Stats" id="modal-img" />
           </div>
           <div className="modal-content-right">
-            <form action="/" method="GET" className="modal-form" id="form">
+            <form action="/" method="GET" className="modal-form" id="form" onSubmit={ createUser }>
               <h1>
                 Get started today! Create your account by filling out the form
                 below.
@@ -46,6 +97,9 @@ const RegisterModal = ({
                   id="username"
                   name="username"
                   placeholder="Enter your username"
+                  onChange={(event) => {
+                    setUsername(event.target.value);
+                  }}
                 />
                 <p>Error Message</p>
               </div>
@@ -56,6 +110,9 @@ const RegisterModal = ({
                   id="password"
                   name="password"
                   placeholder="Enter your password"
+                  onChange={(event) => {
+                    setPassWord(event.target.value);
+                  }}
                 />
                 <p>Error Message</p>
               </div>
@@ -66,6 +123,9 @@ const RegisterModal = ({
                   id="password_confirm"
                   name="password"
                   placeholder="Confirm your password"
+                  onChange={(event) => {
+                    setPassWordConfirmation(event.target.value);
+                  }}
                 />
                 <p>Error Message</p>
               </div>
