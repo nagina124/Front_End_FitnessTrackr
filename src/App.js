@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import "./App.css";
+import Navbar from './components/Navbar'
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Hero from "./components/Hero";
+import RegisterModal from './components/RegisterModal';
+import LoginModal from './components/LoginModal';
 
 function App() {
+  const [registerClick, setRegisterClick] = useState(false);
+  const [loginClick, setLoginClick] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar loginClick={loginClick} setLoginClick={setLoginClick}/>
+      <Hero loginClick={loginClick} setLoginClick={setLoginClick} registerClick={registerClick} setRegisterClick={setRegisterClick}/>
+      <RegisterModal loginClick={loginClick} setLoginClick={setLoginClick} registerClick={registerClick} setRegisterClick={setRegisterClick}/>
+      <LoginModal loginClick={loginClick} setLoginClick={setLoginClick} registerClick={registerClick} setRegisterClick={setRegisterClick}/>
+      <Switch>
+        <Route path="/" />
+      </Switch>
+    </Router>
   );
 }
 
