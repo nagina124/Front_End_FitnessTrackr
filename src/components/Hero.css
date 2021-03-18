@@ -9,7 +9,8 @@
 }
 
 .main {
-  background-color: var(--purplegray);
+  background-image: url('../assets/bg.jpg');
+  background-size: 100vw 100vh;
 }
 
 .main-container {
@@ -19,8 +20,7 @@
   justify-self: center;
   width: 80%;
   margin: 0 auto;
-  height: 90vh;
-  background-color: var(--purplegray);
+  height: calc(100vh - 80px);
 }
 
 .main-content {
@@ -51,6 +51,7 @@
   position: relative;
   transition: all .35s;
   outline: none;
+  z-index: 1;
 }
 
 .main-btn:after {
@@ -85,8 +86,8 @@
     justify-self: center;
     width: 90%;
     margin: 0 auto;
-    height: 90vh;
-    background-color:var(--purplegray);
+      background-image: url('../assets/bg.jpg');
+      background-size: 100vw 100vh;
   }
 
   .main-content {

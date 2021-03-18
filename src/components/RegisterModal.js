@@ -49,16 +49,17 @@ const RegisterModal = ({
 
   const isLoggedIn = (result) => {
     if (result.token) {
-      console.log("is logged in");
+      console.log("Thanks For Signing Up! Please Log In.");
+      // alert('"Thanks For Signing Up! Please Log In."');
       setAuthentication(true);
     } else {
       console.log("not logged in");
     }
   };
 
-  if (authenticate && token) {
-    return <Redirect to="./myroutines" />;
-  }
+  // if (authenticate && token) {
+  //   return <Redirect to="./myroutines" />;
+  // }
 
   window.addEventListener("click", (e) => {
     if (e.target === document.getElementById("register-modal")) {
@@ -85,7 +86,7 @@ const RegisterModal = ({
             <img src={Image2} alt="Fitness Stats" id="modal-img" />
           </div>
           <div className="modal-content-right">
-            <form action="/" method="GET" className="modal-form" id="form" onSubmit={ createUser }>
+            <form className="modal-form" id="form" onSubmit={ createUser }>
               <h1>
                 Get started today! Create your account by filling out the form
                 below.
@@ -101,7 +102,6 @@ const RegisterModal = ({
                     setUsername(event.target.value);
                   }}
                 />
-                <p>Error Message</p>
               </div>
               <div className="form-validation">
                 <input
@@ -114,7 +114,6 @@ const RegisterModal = ({
                     setPassWord(event.target.value);
                   }}
                 />
-                <p>Error Message</p>
               </div>
               <div className="form-validation">
                 <input
@@ -127,7 +126,6 @@ const RegisterModal = ({
                     setPassWordConfirmation(event.target.value);
                   }}
                 />
-                <p>Error Message</p>
               </div>
               <input
                 type="submit"

@@ -1,0 +1,89 @@
+:root {
+  --darkgray: rgb(63, 61, 86);
+  --brightorange: rgb(255, 111, 97);
+  --white: #fff;
+  --lightred: #f9433dcc;
+  --lightpurple: rgb(201, 199, 255);
+  --purplegray: rgb(225, 224, 255);
+  --darkerpurple: rgb(108, 99, 254);
+}
+
+.main-my-routines {
+  background-image: url('../assets/bg.jpg');
+  background-size: 100vw 100vh;
+}
+
+.my-routines-container {
+  width: 80%;
+  margin: 0 auto;
+  justify-self: center;
+  color: var(--darkgray);
+  height: calc(100vh - 80px);
+}
+
+.my-routines-header {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.user-welcome {
+  width: 100%;
+  font-size: 2rem;
+  padding: 30px;
+  text-align: center;
+}
+
+.profile-body {
+  width: 100%;
+  z-index: -1;
+}
+
+.post-routines, .post-activities {
+  display: none;
+}
+
+.post-routines-active, .post-activities-active {
+  padding: 20px;
+  display: active;
+}
+
+.nav {
+  width: 100%;
+  z-index: -1;
+}
+
+.nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  height: 40px;
+}
+
+.nav ul li:nth-child(1) {
+  margin-right: 10px;
+}
+
+.nav ul li {
+  padding: 5px 15px;
+  width: 50%;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--brightorange);
+}
+
+.nav ul li:hover {
+  background-color: var(--darkgray);
+  color: var(--white);
+  padding: 5px 15px;
+  border-radius: 4px;
+  border: solid 1px var(--brightorange);
+}
+
+.user-routines-active, .user-activities-active {
+  color: var(--white);
+}

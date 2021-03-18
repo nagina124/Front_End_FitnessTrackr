@@ -5,3 +5,5 @@ export { default as RegisterModal } from "./RegisterModal";
 export { default as MyRoutines} from "./MyRoutines";
 export { default as Routines} from "./Routines";
 export { default as Activities} from "./Activities";
+export {default as ProfileNavbar} from "./ProfileNavbar";
+export {default as AddRoutineForm} from './AddRoutineForm';
