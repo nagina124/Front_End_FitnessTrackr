@@ -1,57 +1,53 @@
-import "./Routines.css"
+import "./Routines.css";
 import { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { getToken, getUsername } from "../auth";
 
 const Routines = ({ authenticate, username, setUsername }) => {
-    const [ routines, setRoutines ] = useState([]);
-    
-    useEffect(() => {
-        getUsername()
-        .then((response) => response.json())
-          .then((result) => {
-              console.log(result)
-            setUsername(result.username);
-          })
-          .catch(console.error);
-      
-          fetch('https://still-plains-94282.herokuapp.com/api/routines', {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }).then(response => response.json())
-            .then(result => {
-                console.log(result);
-                // const publicRoutines = []
-                // for(let i=0; i< result.length; i++){
-                //     publicRoutines.push(result[i])
-                // }
-                // console.log(publicRoutines)
-                // setRoutines(...publicRoutines)
-                console.log(...result)
-                setRoutines(result)
-                console.log(routines)
-            })
-            .catch(console.error);
-      }, []);
+  const [routines, setRoutines] = useState([]);
 
-    return (
-        <div>
-            <h1> Routines </h1>
-            {/* <section>
-                {routines
-                    .forEach((routine, index) => {
-                        return (
-                            <div key={ index }>
-                                <h3> { routine.name } </h3>
-                            </div>
-                        )
-                    })
+  useEffect(() => {
+    getUsername()
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setUsername(result.username);
+      })
+      .catch(console.error);
 
-                }
-            </section> */}
+    fetch("https://still-plains-94282.herokuapp.com/api/routines", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setRoutines([...result]);
+        console.log(routines);
+      })
+      .catch(console.error);
+  }, []);
+
+  return (
+    <>
+        <div className="main-routines">
+            <div className="main-routines-container">
+                <h1>Stay Motivated, Connect with our Community of Friends, Workout Together</h1>
+                <p>Custom made routines at your fingetips - Challenge yourself with a new routine:</p>
+                <div className="main-routines-content">
+                    {routines.map((routine, idx) => {
+                        return <div className="routines-card" key={idx}>
+                            <h2>{routine.creatorName}</h2>
+                            <h3>Routine: {routine.name}</h3>
+                            <h3>Goal: {routine.goal}</h3>
+                        </div>;
+                    })}
+                </div>
+            </div>
         </div>
-    )
-}
+    </>
+  );
+};
 
 export default Routines;

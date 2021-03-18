@@ -99,7 +99,6 @@ const LoginModal = ({
                     setUsername(event.target.value);
                   }}
                 />
-                <p>Error Message</p>
               </div>
               <div className="form-validation">
                 <input
@@ -112,9 +111,8 @@ const LoginModal = ({
                     setPassword(event.target.value);
                   }}
                 />
-                <p>Error Message</p>
               </div>
-              <input type="submit" className="modal-input-btn" value="Login" />
+              <input type="submit" onClick={close_btn} className="modal-input-btn" value="Login" />
               <span className="modal-input-login">
                 Don't have an account? Sign Up{" "}
                 <Link

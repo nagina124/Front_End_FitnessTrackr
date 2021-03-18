@@ -18,7 +18,7 @@ const Hero = ({ registerClick, setRegisterClick }) => {
             </p>
             <button onClick={handleClick} className="main-btn">
               <Link
-                to="/register"
+                to="/"
                 style={{
                   textDecoration: "none",
                   color: "#fff",
