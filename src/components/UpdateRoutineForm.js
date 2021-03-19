@@ -3,42 +3,41 @@ import { getToken } from "../auth";
 import Modal from "react-modal";
 Modal.setAppElement("#root");
 
-const AddRoutineForm = ({routines, setRoutines, authenticate}) => {
-  const [ modalIsOpen, setModalIsOpen ] = useState(false);
-  const [ name, setName ] = useState("");
-  const [ goal, setGoal ] = useState("");
+const UpdateRoutineForm = ({routines, setRoutines, routineId}) => {
+    const [name, setName] = useState('');
+    const [goal, setGoal] = useState('')
+    const [ modalIsOpen, setModalIsOpen ] = useState(false);
 
-  const makeRoutine = (event) => {
-    event.preventDefault();
-
-    if (getToken() && authenticate) {
-      fetch("https://still-plains-94282.herokuapp.com/api/routines", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`
-        },
-        body: JSON.stringify({
-          name: name,
-          goal: goal,
-          isPublic: true,
-        }),
+  const updateRoutine = (event) => {
+    event.preventDefault()
+    fetch(`https://still-plains-94282.herokuapp.com/api/routines/${routineId}`, {
+    method: "PATCH",
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getToken()}`
+    },
+    body: JSON.stringify({
+      name: name,
+      goal: goal
+    })
+    }).then(response => response.json())
+      .then(result => {
+        if(result) {
+          const updatedRoutine = routines.map((routine) => {
+            if(routine.id === routineId){
+              return result
+            } else {
+              return routine
+            }
+          })
+          setRoutines(updatedRoutine)
+        }
       })
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          if(result.error){
-            alert("routine exists")
-          }
-          const newRoutines = [...routines];
-          console.log(newRoutines, "line 28")
-          newRoutines.push(result);
-          setRoutines(newRoutines);
-          console.log(newRoutines)
-        })
-        .catch(console.error);
-    }
-  };
+      .catch(console.error);
+      event.target.reset()
+  }
+  
+
 
   return (
     <div>
@@ -46,17 +45,18 @@ const AddRoutineForm = ({routines, setRoutines, authenticate}) => {
         onClick={(event) => {
           event.preventDefault();
           setModalIsOpen(true);
-        }}>
-        MAKE NEW ROUTINE
+        }}
+      >
+        UPDATE ROUTINE
       </button>
       <Modal
         style={{
           overlay: {
             position: "fixed",
             top: 300,
-            left: 300,
-            right: 300,
-            bottom: 700,
+            left: 500,
+            right: 500,
+            bottom: 600,
             backgroundColor: "light purple"
           },
           content: {
@@ -76,7 +76,7 @@ const AddRoutineForm = ({routines, setRoutines, authenticate}) => {
         }}
         isOpen={modalIsOpen}
       >
-        <form onSubmit={makeRoutine}>
+    <form onSubmit={updateRoutine}>
     <label>Routine Name</label>
       <input 
         type="text" 
@@ -89,12 +89,15 @@ const AddRoutineForm = ({routines, setRoutines, authenticate}) => {
         placeholder="Enter name of Routine"
         onChange={(event) => {setGoal(event.target.value)}}
       />
+      
       <button  type="submit">
-            Create Routine
+            Update Routine
           </button>
           <button
             className="closeModalButton"
-            onClick={() => setModalIsOpen(false)}
+            onClick={() => {
+              setModalIsOpen(false)
+            }}
           >
             Close
           </button>
@@ -104,4 +107,5 @@ const AddRoutineForm = ({routines, setRoutines, authenticate}) => {
   );
 };
 
-export default AddRoutineForm;
+
+export default UpdateRoutineForm;
