@@ -11,6 +11,8 @@ import {
   Activities,
   ProfileNavbar,
   AddRoutineForm,
+  UpdateRoutineForm,
+  CreateActivityForm
 } from "./components";
 import { getToken, getUsername } from "./auth";
 
@@ -153,6 +155,7 @@ function App() {
           />
         </Route>
         <Route path="/activities">
+          <Navbar loginClick={loginClick} setLoginClick={setLoginClick} />
           <Activities />
         </Route>
       </Switch>

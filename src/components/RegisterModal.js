@@ -57,9 +57,9 @@ const RegisterModal = ({
     }
   };
 
-  // if (authenticate && token) {
-  //   return <Redirect to="./myroutines" />;
-  // }
+  if (token) {
+    return <Redirect to="./myroutines" />;
+  }
 
   window.addEventListener("click", (e) => {
     if (e.target === document.getElementById("register-modal")) {

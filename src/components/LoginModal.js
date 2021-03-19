@@ -20,10 +20,8 @@ const LoginModal = ({
   const [ password, setPassword ] = useState();
   const [ loginSuccessful, setLoginSuccessful ] = useState(false);
 
-
   function authentication(event) {
     event.preventDefault();
-    
       fetch(
         "https://still-plains-94282.herokuapp.com/api/users/login",
         {
@@ -45,7 +43,6 @@ const LoginModal = ({
           isLoggedIn(result)
         })
         .catch(console.error);
-  
   }
 
   const isLoggedIn = (result) => {
