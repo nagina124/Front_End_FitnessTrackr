@@ -1,35 +1,37 @@
 import React, { useState } from "react";
 import { getToken } from "../auth";
 import Modal from "react-modal";
+import Image2 from "../assets/svg-5.svg";
 Modal.setAppElement("#root");
 
-const CreateActivityForm = ({activities, setActivities }) => {
-    const [ name, setName ]= useState("")
-    const [ description, setDescription ]= useState("")
-    const [ modalIsOpen, setModalIsOpen ] = useState(false);
+const CreateActivityForm = ({ activities, setActivities }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    function addActivity(event) {
-      event.preventDefault()
-      fetch('https://still-plains-94282.herokuapp.com/api/activities', {
+  function addActivity(event) {
+    event.preventDefault();
+    fetch("https://still-plains-94282.herokuapp.com/api/activities", {
       method: "POST",
       headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${getToken()}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
       },
       body: JSON.stringify({
-          name: name,
-          description: description
-      })
-      }).then(response => response.json())
-      .then(result => {
-          if(result.error){
-              alert("activity exists, please create a new unique one")
-          }
-          const activityCopy = [...activities]
-          const newActivities = activityCopy.push(result)
-          setActivities(newActivities)
-          // console.log(result);
-
+        name: name,
+        description: description,
+      }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.error) {
+          alert("activity exists, please create a new unique one");
+        }
+        const activityCopy = [...activities];
+        const newActivities = activityCopy.push(result);
+        console.log(newActivities)
+        setActivities(newActivities);
+        // console.log(result);
       })
       .catch(console.error);
   }
@@ -37,6 +39,7 @@ const CreateActivityForm = ({activities, setActivities }) => {
   return (
     <div>
       <button
+        className="my-routines-btn"
         onClick={(event) => {
           event.preventDefault();
           setModalIsOpen(true);
@@ -47,12 +50,12 @@ const CreateActivityForm = ({activities, setActivities }) => {
       <Modal
         style={{
           overlay: {
-            position: "fixed",
-            top: 300,
-            left: 300,
-            right: 300,
-            bottom: 600,
-            backgroundColor: "light purple"
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: "transparent",
+            width: "60%",
+            margin: "auto auto",
+            height: "500px",
           },
           content: {
             position: "absolute",
@@ -60,38 +63,53 @@ const CreateActivityForm = ({activities, setActivities }) => {
             left: "40px",
             right: "40px",
             bottom: "40px",
-            border: "5px solid gold",
-            background: "#fff",
+            background: "rgb(201, 199, 255)",
             overflow: "auto",
             WebkitOverflowScrolling: "touch",
-            borderRadius: "4px",
+            border: "3px solid var(--darkerpurple)",
+            borderRadius: "5px",
             outline: "none",
             padding: "10px",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
           },
         }}
         isOpen={modalIsOpen}
       >
-    <form onSubmit={addActivity}>
+        <div className="add-modal-content-left">
+          <img src={Image2} alt="Fitness Stats" id="modal-img" />
+        </div>
+        <div className="modal-content-right">
+        <form className="form" onSubmit={addActivity}>
           <label>Activity Name</label>
-          <input 
-              type="text" 
-              placeholder="Enter name of Activity"
-              onChange={(event) => {setName(event.target.value)}}
+          <input
+            type="text"
+            className="modal-input"
+            placeholder="Enter name of Activity"
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
           />
           <label>Activity Description</label>
-          <input 
-              type="text" 
-              placeholder="Enter description"
-              onChange={(event) => {setDescription(event.target.value)}}
+          <input
+            type="text"
+            className="modal-input"
+            placeholder="Enter description"
+            onChange={(event) => {
+              setDescription(event.target.value);
+            }}
           />
-          <button type="submit">Create Activity</button>
+          <button className="my-routines-btn" type="submit">
+            Create Activity
+          </button>
           <button
             className="closeModalButton"
             onClick={() => setModalIsOpen(false)}
           >
             Close
           </button>
-    </form>
+        </form>
+        </div>
       </Modal>
     </div>
   );

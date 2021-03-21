@@ -50,16 +50,16 @@ const RegisterModal = ({
   const isLoggedIn = (result) => {
     if (result.token) {
       console.log("Thanks For Signing Up! Please Log In.");
-      // alert('"Thanks For Signing Up! Please Log In."');
+      alert('"Thanks For Signing Up! Please Log In."');
       setAuthentication(true);
     } else {
       console.log("not logged in");
     }
   };
 
-  if (token) {
-    return <Redirect to="./myroutines" />;
-  }
+  // if (token) {
+  //   return <Redirect to="/myroutines" />;
+  // }
 
   window.addEventListener("click", (e) => {
     if (e.target === document.getElementById("register-modal")) {

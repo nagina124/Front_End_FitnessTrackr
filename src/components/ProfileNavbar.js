@@ -33,9 +33,7 @@ const ProfileNavbar = ({username, authenticate}) => {
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
           <li className="nav-item">
-              <Link to="/" className="nav-links">
-                <h3>Home</h3>
-              </Link>
+                <h3 className="nav-user-welcome">Let's Get Fit {username}!</h3>
             </li>
             <li className="nav-item">
               <Link to="/routines" className="nav-links">
@@ -52,10 +50,6 @@ const ProfileNavbar = ({username, authenticate}) => {
                 <h3>Profile</h3>
               </Link>
             </li>
-            <li className="nav-item">
-                <h3 className="nav-user-welcome">Let's Get Fit {username}!</h3>
-            </li>
-            
             <li className="nav-item">
               <Link to="/" onClick={() => logout()} className="nav-links nav-links-btn">
                 Logout
