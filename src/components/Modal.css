@@ -105,32 +105,6 @@
   width: 80%;
 }
 
-.form-validation.error {
-  margin-bottom: 1.5rem;
-  position: relative;
-  border: 1px solid var(--errorColor);
-  border-radius: 2px;
-}
-.form-validation.valid {
-  margin-bottom: 1.5rem;
-  position: relative;
-  border: 1px solid var(--validColor);
-  border-radius: 2px;
-}
-
-.form-validation p {
-  font-size: 0.7rem;
-  margin-top: 0.5rem;
-  color: var(--errorColor);
-  position: absolute;
-  top: 1.8rem;
-  display: none;
-}
-
-.form-validation.error p {
-  display: block;
-}
-
 .modal-input {
   display: block;
   padding-left: 0.5rem;
